@@ -84,8 +84,7 @@ This package contains the libraries for %{name}.
 
 %package        devel
 Summary:        Development package for %{name}
-Requires:       %{name}-libs%{_isa} = %{?epoch}:%{version}-%{release}
-Requires:       libavdevice%{_isa} = %{?epoch}:%{version}-%{release}
+Requires:       %{name}-libs%{_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       pkgconfig
 
 %description    devel
