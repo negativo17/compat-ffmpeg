@@ -2,8 +2,8 @@
 
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
-Version:        2.8.8
-Release:        4%{?dist}
+Version:        2.8.10
+Release:        1%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -225,6 +225,9 @@ mv doc/*.html doc/html
 %{_libdir}/lib*.so
 
 %changelog
+* Mon Dec 12 2016 Simone Caronni <negativo17@gmail.com> - 1:2.8.10-1
+- Update to 2.8.10.
+
 * Thu Nov 10 2016 Simone Caronni <negativo17@gmail.com> - 1:2.8.8-4
 - Create compat package from latest 2.8 ffmpeg package.
 - Do not recommend Nvidia driver libraries anymore for dynamic NVENC support.
