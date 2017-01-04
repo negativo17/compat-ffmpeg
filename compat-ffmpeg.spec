@@ -197,7 +197,7 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
 %endif
 %endif
 
-make %{?_smp_mflags}
+%make_build
 make documentation
 
 %install
