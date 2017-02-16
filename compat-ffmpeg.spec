@@ -2,8 +2,8 @@
 
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
-Version:        2.8.10
-Release:        2%{?dist}
+Version:        2.8.11
+Release:        1%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -225,6 +225,9 @@ mv doc/*.html doc/html
 %{_libdir}/lib*.so
 
 %changelog
+* Thu Feb 16 2017 Simone Caronni <negativo17@gmail.com> - 1:2.8.11-1
+- Update to 2.8.11.
+
 * Tue Jan 03 2017 Simone Caronni <negativo17@gmail.com> - 1:2.8.10-2
 - Rebuild for x265 2.2.
 
