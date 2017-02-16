@@ -19,7 +19,6 @@ BuildRequires:  fribidi-devel
 BuildRequires:  gnutls-devel
 BuildRequires:  gsm-devel
 BuildRequires:  lame-devel >= 3.98.3
-BuildRequires:  libaacplus-devel >= 2.0.2
 BuildRequires:  libass-devel
 BuildRequires:  libbluray-devel
 BuildRequires:  libcdio-paranoia-devel
@@ -117,7 +116,6 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
     --enable-gnutls \
     --enable-gpl \
     --enable-iconv \
-    --enable-libaacplus \
     --enable-libass \
     --enable-libbluray \
     --enable-libcdio \
@@ -227,6 +225,7 @@ mv doc/*.html doc/html
 %changelog
 * Thu Feb 16 2017 Simone Caronni <negativo17@gmail.com> - 1:2.8.11-1
 - Update to 2.8.11.
+- Remove support for deprecated HE-AAC audio (libaacplus).
 
 * Tue Jan 03 2017 Simone Caronni <negativo17@gmail.com> - 1:2.8.10-2
 - Rebuild for x265 2.2.
