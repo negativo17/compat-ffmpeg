@@ -3,7 +3,7 @@
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
 Version:        2.8.11
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -223,6 +223,9 @@ mv doc/*.html doc/html
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Mar 22 2017 Simone Caronni <negativo17@gmail.com> - 1:2.8.11-3
+- Rebuild for libbluray update.
+
 * Sun Feb 26 2017 Simone Caronni <negativo17@gmail.com> - 1:2.8.11-2
 - Rebuild for x265 update.
 
