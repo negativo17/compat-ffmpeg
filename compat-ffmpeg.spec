@@ -3,7 +3,7 @@
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
 Version:        2.8.14
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -222,6 +222,9 @@ mv doc/*.html doc/html
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Apr 25 2018 Simone Caronni <negativo17@gmail.com> - 1:2.8.14-2
+- Rebuild for updated libraries.
+
 * Tue Apr 10 2018 Simone Caronni <negativo17@gmail.com> - 1:2.8.14-1
 - Update to 2.8.14.
 
