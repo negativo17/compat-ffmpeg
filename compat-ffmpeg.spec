@@ -2,8 +2,8 @@
 
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
-Version:        2.8.14
-Release:        2%{?dist}
+Version:        3.4.2
+Release:        1%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -11,57 +11,88 @@ Epoch:          1
 Source0:        http://%{real_name}.org/releases/%{real_name}-%{version}.tar.xz
 
 BuildRequires:  bzip2-devel
+BuildRequires:  decklink-devel >= 10.6.1
 BuildRequires:  doxygen
-BuildRequires:  faac-devel
 BuildRequires:  freetype-devel
 BuildRequires:  frei0r-devel
-BuildRequires:  fribidi-devel
-BuildRequires:  gnutls-devel
 BuildRequires:  gsm-devel
+BuildRequires:  ilbc-devel
 BuildRequires:  lame-devel >= 3.98.3
-BuildRequires:  libass-devel
-BuildRequires:  libbluray-devel
 BuildRequires:  libcdio-paranoia-devel
-BuildRequires:  libdc1394-devel
+BuildRequires:  libdrm-devel
 BuildRequires:  libfdk-aac-devel
-Buildrequires:  libmfx-devel
-Buildrequires:  libmodplug-devel
-BuildRequires:  librtmp-devel
+BuildRequires:  libndi-devel
 BuildRequires:  libssh-devel
 BuildRequires:  libtheora-devel
-BuildRequires:  libv4l-devel
 BuildRequires:  libvdpau-devel
-BuildRequires:  libvo-aacenc-devel
 BuildRequires:  libvorbis-devel
-BuildRequires:  libvpx-devel
-BuildRequires:  libwebp-devel >= 0.2.0
-BuildRequires:  nvenc
+BuildRequires:  librsvg2-devel
+BuildRequires:  libxcb-devel >= 1.4
+BuildRequires:  mesa-libGL-devel
+BuildRequires:  nvenc >= 8.0.14
 Buildrequires:  ocl-icd-devel
 Buildrequires:  openal-soft-devel
 Buildrequires:  opencl-headers
 Buildrequires:  opencore-amr-devel
-Buildrequires:  openh264-devel
 BuildRequires:  openjpeg-devel
-BuildRequires:  opus-devel
 BuildRequires:  perl(Pod::Man)
-BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  schroedinger-devel
-BuildRequires:  SDL-devel
 BuildRequires:  soxr-devel
-BuildRequires:  speex-devel
 BuildRequires:  subversion
 BuildRequires:  texinfo
 BuildRequires:  twolame-devel >= 0.3.10
 BuildRequires:  vo-amrwbenc-devel
-BuildRequires:  x264-devel >= 0.118
-BuildRequires:  x265-devel >= 0.57
 BuildRequires:  xvidcore-devel
+BuildRequires:  xz-devel
 BuildRequires:  zlib-devel
+BuildRequires:  zvbi-devel >= 0.2.28
+
+BuildRequires:  pkgconfig(fontconfig)
+BuildRequires:  pkgconfig(fribidi)
+BuildRequires:  pkgconfig(gnutls)
+BuildRequires:  pkgconfig(kvazaar) >= 0.8.1
+BuildRequires:  pkgconfig(libass)
+BuildRequires:  pkgconfig(libbluray)
+BuildRequires:  pkgconfig(libbs2b)
+BuildRequires:  pkgconfig(libdc1394-2)
+BuildRequires:  pkgconfig(libmfx)
+BuildRequires:  pkgconfig(libmodplug)
+#BuildRequires:  pkgconfig(libopenmpt) >= 0.2.6557
+BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(librtmp)
+BuildRequires:  pkgconfig(libssh)
+BuildRequires:  pkgconfig(libtcmalloc)
+BuildRequires:  pkgconfig(libv4l2)
+BuildRequires:  pkgconfig(libwebp) >= 0.4.0
+BuildRequires:  pkgconfig(libwebpmux) >= 0.4.0
+BuildRequires:  pkgconfig(libzmq)
+BuildRequires:  pkgconfig(opencv)
+BuildRequires:  pkgconfig(openh264) >= 1.6
+BuildRequires:  pkgconfig(opus)
+BuildRequires:  pkgconfig(rubberband) >= 1.8.1
+BuildRequires:  pkgconfig(sdl2)
+#BuildRequires:  pkgconfig(shine)
+BuildRequires:  pkgconfig(speex)
+BuildRequires:  pkgconfig(tesseract)
+#BuildRequires:  pkgconfig(vidstab) >= 0.98
+BuildRequires:  pkgconfig(vpx) >= 1.3.0
+BuildRequires:  pkgconfig(xcb) >= 1.4
+BuildRequires:  pkgconfig(xcb-shape)
+BuildRequires:  pkgconfig(xcb-shm)
+BuildRequires:  pkgconfig(xcb-xfixes)
+BuildRequires:  pkgconfig(x264) >= 0.118
+BuildRequires:  pkgconfig(x265) >= 0.68
+#BuildRequires:  pkgconfig(zimg) >= 2.3.0
 
 %ifarch %{ix86} x86_64
 BuildRequires:  libXvMC-devel
 BuildRequires:  libva-devel
-BuildRequires:  yasm
+BuildRequires:  nasm
+%endif
+
+# Nvidia CUVID support and Performance Primitives based code
+%ifarch x86_64
+BuildRequires:  cuda-devel
+BuildRequires:  nvidia-driver-devel
 %endif
 
 %description
@@ -94,8 +125,11 @@ This package contains development files for %{name}.
 
 %prep
 %setup -qn %{real_name}-%{version}
-# Dynamically load libcuda.so.1 (SONAME)
+# Use CUDA entry point versioned library (SONAME)
 sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
+
+# Uncomment to enable debugging while configuring
+#sed -i -e 's|#!/bin/sh|#!/bin/sh -x|g' configure
 
 %build
 ./configure \
@@ -109,6 +143,12 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
     --enable-avfilter \
     --enable-avresample \
     --enable-bzlib \
+%ifarch x86_64
+    --enable-cuda \
+    --enable-cuvid \
+    --enable-libnpp \
+%endif
+    --enable-decklink \
     --enable-doc \
     --enable-fontconfig \
     --enable-frei0r \
@@ -119,49 +159,58 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
     --enable-libbluray \
     --enable-libcdio \
     --enable-libdc1394 \
-    --enable-libfaac \
+    --enable-libdrm \
     --enable-libfdk-aac \
     --enable-libfreetype \
     --enable-libfribidi \
     --enable-libgsm \
-    --disable-libkvazaar \
+    --enable-libilbc \
+    --enable-libkvazaar \
     --enable-libmfx \
     --enable-libmp3lame \
     --enable-libopencore-amrnb \
     --enable-libopencore-amrwb \
+    --enable-libopenh264 \
     --enable-libopenjpeg \
     --enable-libopus \
     --enable-libpulse \
+    --enable-librsvg \
     --enable-librtmp \
-    --enable-libschroedinger \
+    --enable-librubberband \
     --enable-libsoxr \
     --enable-libspeex \
     --enable-libssh \
+    --enable-libtesseract \
     --enable-libtheora \
     --enable-libtwolame \
     --enable-libv4l2 \
-    --enable-libvo-aacenc \
     --enable-libvo-amrwbenc \
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
+    --enable-libxcb \
+    --enable-libxcb-shm \
+    --enable-libxcb-xfixes \
+    --enable-libxcb-shape \
     --enable-libxvid \
+    --enable-libzvbi \
     --enable-lzma \
+    --enable-libndi_newtek \
     --enable-nonfree \
     --enable-openal \
     --enable-opencl \
-    --enable-nvenc --extra-cflags=-I%{_includedir}/nvenc \
+    --enable-nvenc \
     --enable-opengl \
     --enable-postproc \
     --enable-pthreads \
-    --enable-sdl \
+    --enable-sdl2 \
     --enable-shared \
     --enable-version3 \
-    --enable-x11grab \
     --enable-xlib \
     --enable-zlib \
+    --extra-cflags="-I%{_includedir}/nvenc -I%{_includedir}/cuda" \
     --incdir=%{_includedir}/%{name} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
@@ -201,27 +250,29 @@ make documentation
 %make_install
 # Let rpmbuild pick up the docs
 rm -fr %{buildroot}%{_docdir}/*
+rm -fr %{buildroot}%{_datadir}/%{name}/examples
 mkdir doc/html
 mv doc/*.html doc/html
 
-%post libs -p /sbin/ldconfig
-
-%postun libs -p /sbin/ldconfig
+%ldconfig_scriptlets libs
 
 %files libs
-%{!?_licensedir:%global license %%doc}
 %license COPYING.* LICENSE.md
 %doc MAINTAINERS README.md CREDITS Changelog RELEASE_NOTES
 %{_libdir}/lib*.so.*
 
 %files devel
 %doc doc/APIchanges doc/*.txt
-%doc doc/html
+%doc doc/html doc/examples
 %{_includedir}/%{name}
 %{_libdir}/pkgconfig/lib*.pc
 %{_libdir}/lib*.so
 
 %changelog
+* Fri Apr 27 2018 Simone Caronni <negativo17@gmail.com> - 1:3.4.2-1
+- Update to 3.4.2, update all build requirements.
+- Update SPEC file.
+
 * Wed Apr 25 2018 Simone Caronni <negativo17@gmail.com> - 1:2.8.14-2
 - Rebuild for updated libraries.
 
