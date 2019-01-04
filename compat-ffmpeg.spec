@@ -29,6 +29,7 @@ BuildRequires:  libvorbis-devel
 BuildRequires:  librsvg2-devel
 BuildRequires:  libxcb-devel >= 1.4
 BuildRequires:  mesa-libGL-devel
+# Nvidia NVENC/CUVID (both i686 and x86_64):
 BuildRequires:  nvenc >= 8.0.14
 Buildrequires:  ocl-icd-devel
 Buildrequires:  openal-soft-devel
@@ -89,10 +90,8 @@ BuildRequires:  libva-devel
 BuildRequires:  nasm
 %endif
 
-# Nvidia CUVID support and Performance Primitives based code
 %ifarch x86_64
 BuildRequires:  cuda-devel
-BuildRequires:  nvidia-driver-devel
 %endif
 
 %description
@@ -143,11 +142,7 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
     --enable-avfilter \
     --enable-avresample \
     --enable-bzlib \
-%ifarch x86_64
-    --enable-cuda \
     --enable-cuvid \
-    --enable-libnpp \
-%endif
     --enable-decklink \
     --enable-doc \
     --enable-fontconfig \
@@ -241,6 +236,10 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
 %ifarch armv7hnl
     --enable-neon \
 %endif
+%endif
+%ifarch x86_64
+    --enable-cuda \
+    --enable-libnpp \
 %endif
 
 %make_build
