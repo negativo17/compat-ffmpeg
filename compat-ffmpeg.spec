@@ -9,6 +9,7 @@ URL:            http://%{real_name}.org/
 Epoch:          1
 
 Source0:        http://%{real_name}.org/releases/%{real_name}-%{version}.tar.xz
+Patch0:         %{real_name}-%{version}-fdk-aac-v2.patch
 
 BuildRequires:  bzip2-devel
 BuildRequires:  decklink-devel >= 10.6.1
@@ -123,7 +124,7 @@ and video, MPEG4, h263, ac3, asf, avi, real, mjpeg, and flash.
 This package contains development files for %{name}.
 
 %prep
-%setup -qn %{real_name}-%{version}
+%autosetup -p1 -n %{real_name}-%{version}
 # Use CUDA entry point versioned library (SONAME)
 sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
 
