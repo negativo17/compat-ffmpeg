@@ -9,7 +9,7 @@ URL:            http://%{real_name}.org/
 Epoch:          1
 
 Source0:        http://%{real_name}.org/releases/%{real_name}-%{version}.tar.xz
-Patch0:         %{real_name}-%{version}-fdk-aac-v2.patch
+Patch0:         %{real_name}-3.4.5-fdk-aac-v2.patch
 
 BuildRequires:  bzip2-devel
 BuildRequires:  decklink-devel >= 10.6.1
