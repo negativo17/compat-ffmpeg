@@ -3,7 +3,7 @@
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
 Version:        3.4.6
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -22,7 +22,6 @@ BuildRequires:  lame-devel >= 3.98.3
 BuildRequires:  libcdio-paranoia-devel
 BuildRequires:  libdrm-devel
 BuildRequires:  libfdk-aac-devel
-BuildRequires:  libndi-devel
 BuildRequires:  libssh-devel
 BuildRequires:  libtheora-devel
 BuildRequires:  libvdpau-devel
@@ -269,6 +268,9 @@ mv doc/*.html doc/html
 %{_libdir}/lib*.so
 
 %changelog
+* Sun Oct 27 2019 Simone Caronni <negativo17@gmail.com> - 1:3.4.6-5
+- Disable NewTek NDI SDK support.
+
 * Sun Oct 20 2019 Simone Caronni <negativo17@gmail.com> - 1:3.4.6-4
 - Rebuild for updated dependencies.
 
