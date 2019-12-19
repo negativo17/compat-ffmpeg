@@ -2,8 +2,8 @@
 
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
-Version:        3.4.6
-Release:        5%{?dist}
+Version:        3.4.7
+Release:        1%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -268,6 +268,9 @@ mv doc/*.html doc/html
 %{_libdir}/lib*.so
 
 %changelog
+* Thu Dec 19 2019 Simone Caronni <negativo17@gmail.com> - 1:3.4.7-1
+- Update to 3.4.7.
+
 * Sun Oct 27 2019 Simone Caronni <negativo17@gmail.com> - 1:3.4.6-5
 - Disable NewTek NDI SDK support.
 
