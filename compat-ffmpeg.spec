@@ -192,7 +192,6 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
     --enable-libxvid \
     --enable-libzvbi \
     --enable-lzma \
-    --enable-libndi_newtek \
     --enable-nonfree \
     --enable-openal \
     --enable-opencl \
