@@ -3,7 +3,7 @@
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
 Version:        3.4.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -267,6 +267,9 @@ mv doc/*.html doc/html
 %{_libdir}/lib*.so
 
 %changelog
+* Sun Jan 19 2020 Simone Caronni <negativo17@gmail.com> - 1:3.4.7-3
+- Rebuild for updated dependencies.
+
 * Thu Jan 16 2020 Simone Caronni <negativo17@gmail.com> - 1:3.4.7-2
 - Fix OpenJPEG build requirement.
 
