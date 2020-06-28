@@ -3,7 +3,7 @@
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
 Version:        3.4.7
-Release:        5%{?dist}
+Release:        6%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -12,7 +12,6 @@ Source0:        http://%{real_name}.org/releases/%{real_name}-%{version}.tar.xz
 Patch0:         %{real_name}-3.4.5-fdk-aac-v2.patch
 
 BuildRequires:  bzip2-devel
-BuildRequires:  decklink-devel >= 10.6.1
 BuildRequires:  doxygen
 BuildRequires:  freetype-devel
 BuildRequires:  frei0r-devel
@@ -55,7 +54,6 @@ BuildRequires:  pkgconfig(libass)
 BuildRequires:  pkgconfig(libbluray)
 BuildRequires:  pkgconfig(libbs2b)
 BuildRequires:  pkgconfig(libdc1394-2)
-BuildRequires:  pkgconfig(libmfx)
 BuildRequires:  pkgconfig(libmodplug)
 #BuildRequires:  pkgconfig(libopenmpt) >= 0.2.6557
 BuildRequires:  pkgconfig(libpulse)
@@ -74,7 +72,7 @@ BuildRequires:  pkgconfig(sdl2)
 #BuildRequires:  pkgconfig(shine)
 BuildRequires:  pkgconfig(speex)
 BuildRequires:  pkgconfig(tesseract)
-#BuildRequires:  pkgconfig(vidstab) >= 0.98
+BuildRequires:  pkgconfig(vidstab) >= 0.98
 BuildRequires:  pkgconfig(vpx) >= 1.3.0
 BuildRequires:  pkgconfig(xcb) >= 1.4
 BuildRequires:  pkgconfig(xcb-shape)
@@ -82,16 +80,14 @@ BuildRequires:  pkgconfig(xcb-shm)
 BuildRequires:  pkgconfig(xcb-xfixes)
 BuildRequires:  pkgconfig(x264) >= 0.118
 BuildRequires:  pkgconfig(x265) >= 0.68
-#BuildRequires:  pkgconfig(zimg) >= 2.3.0
-
-%ifarch %{ix86} x86_64
-BuildRequires:  libXvMC-devel
-BuildRequires:  libva-devel
-BuildRequires:  nasm
-%endif
+BuildRequires:  pkgconfig(zimg) >= 2.3.0
 
 %ifarch x86_64
 BuildRequires:  cuda-devel
+BuildRequires:  libXvMC-devel
+BuildRequires:  libva-devel
+BuildRequires:  nasm
+BuildRequires:  pkgconfig(libmfx)
 %endif
 
 %description
@@ -127,9 +123,6 @@ This package contains development files for %{name}.
 # Use CUDA entry point versioned library (SONAME)
 sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
 
-# Uncomment to enable debugging while configuring
-#sed -i -e 's|#!/bin/sh|#!/bin/sh -x|g' configure
-
 %build
 ./configure \
     --arch=%{_target_cpu} \
@@ -143,7 +136,6 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
     --enable-avresample \
     --enable-bzlib \
     --enable-cuvid \
-    --enable-decklink \
     --enable-doc \
     --enable-fontconfig \
     --enable-frei0r \
@@ -267,6 +259,10 @@ mv doc/*.html doc/html
 %{_libdir}/lib*.so
 
 %changelog
+* Sun Jun 28 2020 Simone Caronni <negativo17@gmail.com> - 1:3.4.7-6
+- Enable vidstab and zimg support.
+- Remove DeckLink support.
+
 * Fri May 15 2020 Simone Caronni <negativo17@gmail.com> - 1:3.4.7-5
 - Rebuild for updated dependencies.
 
