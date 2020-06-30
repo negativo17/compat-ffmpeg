@@ -28,8 +28,6 @@ BuildRequires:  libvorbis-devel
 BuildRequires:  librsvg2-devel
 BuildRequires:  libxcb-devel >= 1.4
 BuildRequires:  mesa-libGL-devel
-# Nvidia NVENC/CUVID (both i686 and x86_64):
-BuildRequires:  nvenc >= 8.0.14
 Buildrequires:  ocl-icd-devel
 Buildrequires:  openal-soft-devel
 Buildrequires:  opencl-headers
@@ -87,6 +85,7 @@ BuildRequires:  cuda-devel
 BuildRequires:  libXvMC-devel
 BuildRequires:  libva-devel
 BuildRequires:  nasm
+BuildRequires:  nvenc >= 8.0.14
 BuildRequires:  pkgconfig(libmfx)
 %endif
 
@@ -135,7 +134,6 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
     --enable-avfilter \
     --enable-avresample \
     --enable-bzlib \
-    --enable-cuvid \
     --enable-doc \
     --enable-fontconfig \
     --enable-frei0r \
@@ -153,7 +151,6 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
     --enable-libgsm \
     --enable-libilbc \
     --enable-libkvazaar \
-    --enable-libmfx \
     --enable-libmp3lame \
     --enable-libopencore-amrnb \
     --enable-libopencore-amrwb \
@@ -187,7 +184,6 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
     --enable-nonfree \
     --enable-openal \
     --enable-opencl \
-    --enable-nvenc \
     --enable-opengl \
     --enable-postproc \
     --enable-pthreads \
@@ -230,7 +226,10 @@ sed -i -e 's/libcuda.so/libcuda.so.1/g' libavcodec/nvenc.c
 %endif
 %ifarch x86_64
     --enable-cuda \
+    --enable-cuvid \
+    --enable-libmfx \
     --enable-libnpp \
+    --enable-nvenc \
 %endif
 
 %make_build
@@ -262,6 +261,7 @@ mv doc/*.html doc/html
 * Sun Jun 28 2020 Simone Caronni <negativo17@gmail.com> - 1:3.4.7-6
 - Enable vidstab and zimg support.
 - Remove DeckLink support.
+- Do not enable NVENC for aarch64.
 
 * Fri May 15 2020 Simone Caronni <negativo17@gmail.com> - 1:3.4.7-5
 - Rebuild for updated dependencies.
