@@ -3,7 +3,7 @@
 Summary:        A complete solution to record, convert and stream audio and video
 Name:           compat-%{real_name}
 Version:        3.4.7
-Release:        6%{?dist}
+Release:        7%{?dist}
 License:        LGPLv3+
 URL:            http://%{real_name}.org/
 Epoch:          1
@@ -258,6 +258,9 @@ mv doc/*.html doc/html
 %{_libdir}/lib*.so
 
 %changelog
+* Tue Jul 14 2020 Simone Caronni <negativo17@gmail.com> - 1:3.4.7-7
+- Rebuild for updated dependencies.
+
 * Sun Jun 28 2020 Simone Caronni <negativo17@gmail.com> - 1:3.4.7-6
 - Enable vidstab and zimg support.
 - Remove DeckLink support.
