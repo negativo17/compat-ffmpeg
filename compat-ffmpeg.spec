@@ -82,7 +82,6 @@ BuildRequires:  pkgconfig(zimg) >= 2.3.0
 
 %ifarch x86_64
 BuildRequires:  cuda-devel
-BuildRequires:  libXvMC-devel
 BuildRequires:  libva-devel
 BuildRequires:  nasm
 BuildRequires:  nvenc >= 8.0.14
@@ -260,6 +259,7 @@ mv doc/*.html doc/html
 %changelog
 * Tue May 24 2022 Simone Caronni <negativo17@gmail.com> - 1:3.4.11-1
 - Update to 3.4.11.
+- Drop XVideo Motion Compensation support.
 
 * Sun Apr 03 2022 Simone Caronni <negativo17@gmail.com> - 1:3.4.9-2
 - Rebuild for updated dependencies.
